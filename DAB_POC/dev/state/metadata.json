@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "config": {
+    "bundle": {
+      "git": {
+        "bundle_root_path": "."
+      }
+    },
+    "workspace": {
+      "file_path": "/Workspace/Users/ashgoku60@gmail.com/DAB_POC/DAB_POC/dev/files"
+    },
+    "resources": {
+      "jobs": {
+        "DAB_POC_job": {
+          "id": "862762972360973",
+          "relative_path": "resources/DAB_POC.job.yml"
+        }
+      }
+    }
+  }
+}
