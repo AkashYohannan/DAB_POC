@@ -16,7 +16,7 @@ steps:
       cd files
       pip install databricks-cli
       databricks bundle validate
-      databricks bundle deploy --target=dev
+      databricks bundle deploy -t
     env:
       DATABRICKS_HOST: $(DATABRICKS_HOST)
       DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
