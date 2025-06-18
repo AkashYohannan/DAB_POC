@@ -8,12 +8,6 @@ resources:
       libraries:
         - notebook:
             path: ../src/dlt_pipeline.ipynb
-      clusters:
-        - label: default
-          num_workers: 1
-          node_type_id: Standard_E4ds_v4
-          custom_tags:
-            ResourceClass: SingleNode
 
       configuration:
         bundle.sourcePath: ${workspace.file_path}/src
