@@ -11,9 +11,6 @@ variables:
   DATABRICKS_TOKEN: $(DATABRICKS_TOKEN_DEV)
 
 steps:
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.10'
 
   - script: |
       pip install databricks-cli
