@@ -1,0 +1,78 @@
+trigger:
+  branches:
+    include:
+      - "*"
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  DATABRICKS_HOST_DEV: $(DATABRICKS_HOST_DEV)
+  DATABRICKS_TOKEN_DEV: $(DATABRICKS_TOKEN_DEV)
+  DATABRICKS_HOST_PROD: $(DATABRICKS_HOST_PROD)
+  DATABRICKS_TOKEN_PROD: $(DATABRICKS_TOKEN_PROD)
+
+stages:
+- stage: DeployDev
+  displayName: 'Deploy to Dev'
+  condition: ne(variables['Build.SourceBranch'], 'refs/heads/main')
+  jobs:
+    - job: DeployDevJob
+      displayName: 'Deploy to Dev Workspace'
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.10'
+
+        - script: |
+            python -m pip install --upgrade pip
+            pip install databricks-cli databricks-sdk
+          displayName: 'Install Databricks CLI + SDK'
+
+        - script: |
+            cd files
+            databricks bundle validate
+          displayName: 'Validate Bundle'
+          env:
+            DATABRICKS_HOST: $(DATABRICKS_HOST_DEV)
+            DATABRICKS_TOKEN: $(DATABRICKS_TOKEN_DEV)
+
+        - script: |
+            cd files
+            databricks bundle deploy --target=dev
+          displayName: 'Deploy to Dev'
+          env:
+            DATABRICKS_HOST: $(DATABRICKS_HOST_DEV)
+            DATABRICKS_TOKEN: $(DATABRICKS_TOKEN_DEV)
+
+- stage: DeployProd
+  displayName: 'Deploy to Prod'
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
+  jobs:
+    - job: DeployProdJob
+      displayName: 'Deploy to Prod Workspace'
+      steps:
+        - task: UsePythonVersion@0
+          inputs:
+            versionSpec: '3.10'
+
+        - script: |
+            python -m pip install --upgrade pip
+            pip install databricks-cli databricks-sdk
+          displayName: 'Install Databricks CLI + SDK'
+
+        - script: |
+            cd files
+            databricks bundle validate
+          displayName: 'Validate Bundle'
+          env:
+            DATABRICKS_HOST: $(DATABRICKS_HOST_PROD)
+            DATABRICKS_TOKEN: $(DATABRICKS_TOKEN_PROD)
+
+        - script: |
+            cd files
+            databricks bundle deploy --target=prod
+          displayName: 'Deploy to Prod'
+          env:
+            DATABRICKS_HOST: $(DATABRICKS_HOST_PROD)
+            DATABRICKS_TOKEN: $(DATABRICKS_TOKEN_PROD)
