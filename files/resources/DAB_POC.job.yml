@@ -26,29 +26,25 @@ resources:
           pipeline_task:
             pipeline_id: ${resources.pipelines.DAB_POC_pipeline.id}
 
-        # - task_key: main_task
-        #   depends_on:
-        #     - task_key: refresh_pipeline
-        #   job_cluster_key: job_cluster
-        #   python_wheel_task:
-        #     package_name: DAB_POC
-        #     entry_point: main
-        #   libraries:
-        #     # By default we just include the .whl file generated for the DAB_POC package.
-        #     # See https://docs.databricks.com/dev-tools/bundles/library-dependencies.html
-        #     # for more information on how to add other libraries.
-        #     - whl: ../dist/*.whl
+        - task_key: main_task
+          depends_on:
+            - task_key: refresh_pipeline
+          job_cluster_key: job_cluster
+          python_wheel_task:
+            package_name: DAB_POC
+            entry_point: main
+          libraries:
+            # By default we just include the .whl file generated for the DAB_POC package.
+            # See https://docs.databricks.com/dev-tools/bundles/library-dependencies.html
+            # for more information on how to add other libraries.
+            - whl: ../dist/*.whl
 
       job_clusters:
         - job_cluster_key: job_cluster
           new_cluster:
             spark_version: 15.4.x-scala2.12
-            node_type_id: Standard_E4ds_v4
+            node_type_id: Standard_D3_v2
             data_security_mode: SINGLE_USER
-            num_workers: 0
-            spark_conf:
-              spark.databricks.cluster.profile: singleNode
-              spark.master: local[*]
-            custom_tags:
-              ResourceClass: SingleNode
-            data_security_mode: SINGLE_USER
+            autoscale:
+                min_workers: 1
+                max_workers: 4

@@ -2,11 +2,10 @@
 # See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
 bundle:
   name: DAB_POC
-  uuid: be51d4df-36f9-4266-ac40-564c893e2d12
+  uuid: 3d773c9c-5262-4a75-86bc-ba3fff279833
 
 include:
   - resources/*.yml
-
 
 targets:
   dev:
@@ -18,7 +17,7 @@ targets:
     default: true
     workspace:
       host: https://adb-504630645111494.14.azuredatabricks.net
-      root_path: /Workspace/Users/ashgoku60@gmail.com/DAB_POC/${bundle.name}/${bundle.target}
+      root_path: /Workspace/Users/ashgoku60@gmail.com/DAB_POC
 
   prod:
     mode: production

@@ -7,12 +7,12 @@
       }
     },
     "workspace": {
-      "file_path": "/Workspace/Users/ashgoku60@gmail.com/DAB_POC/DAB_POC/dev/files"
+      "file_path": "/Workspace/Users/ashgoku60@gmail.com/DAB_POC/files"
     },
     "resources": {
       "jobs": {
         "DAB_POC_job": {
-          "id": "862762972360973",
+          "id": "705470204822852",
           "relative_path": "resources/DAB_POC.job.yml"
         }
       }
