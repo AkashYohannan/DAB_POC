@@ -13,7 +13,9 @@ variables:
 steps:
 
   - script: |
+      cd files
       pip install databricks-cli
+      databricks bundle validate
       databricks bundle deploy --target=dev
     env:
       DATABRICKS_HOST: $(DATABRICKS_HOST)
