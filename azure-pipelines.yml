@@ -1,0 +1,23 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  DATABRICKS_HOST: $(DATABRICKS_HOST_DEV)
+  DATABRICKS_TOKEN: $(DATABRICKS_TOKEN_DEV)
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.10'
+
+  - script: |
+      pip install databricks-cli
+      databricks bundle deploy --target=dev
+    env:
+      DATABRICKS_HOST: $(DATABRICKS_HOST)
+      DATABRICKS_TOKEN: $(DATABRICKS_TOKEN)
